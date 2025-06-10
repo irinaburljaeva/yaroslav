@@ -14,11 +14,11 @@
       }
     };
 
-    // создаём линии-трещины
+    // Рисуем линии-трещины через CSS, без внешних картинок
     const cracks = [];
     for (let i = 0; i < stage; i++) {
-      const angle   = (Math.random() * 60) - 30;
-      const offsetX = (Math.random() * 40) - 20;
+      const angle = Math.random() * 60 - 30;    // угол от –30° до +30°
+      const offsetX = Math.random() * 40 - 20;  // сдвиг по X
       cracks.push(
         React.createElement("div", {
           key: i,
@@ -31,7 +31,7 @@
       );
     }
 
-    // финальный экран
+    // Финальное состояние: QR + поздравления
     if (stage >= maxClicks) {
       return React.createElement("div", null,
         React.createElement("h2", null, "🎉 Ура! Подарок готов!"),
@@ -50,7 +50,7 @@
       );
     }
 
-    // стартовый экран
+    // Стартовое сообщение
     if (stage === 0) {
       return React.createElement("div", null,
         React.createElement("h1", null, "Ярослав, поздравляем со свадьбой!"),
@@ -62,18 +62,16 @@
       );
     }
 
-    // промежуточные стадии (1–9)
+    // Промежуточные клики: показываем свинку + трещины
     return React.createElement("div", null,
       React.createElement("p", null, "Нажимай на свинку, чтобы она отдала тебе подарок"),
       React.createElement("div", { className: "piggy-container" },
-        // надёжный URL свинки
         React.createElement("img", {
           src: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Piggy_Bank_Vector.svg/512px-Piggy_Bank_Vector.svg.png",
           className: "piggy" + (shaking ? " shake" : ""),
           onClick: handleClick,
           alt: "копилка-свинка"
         }),
-        // наложенные линии-трещины
         ...cracks
       )
     );
