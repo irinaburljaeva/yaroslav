@@ -12,14 +12,14 @@
       background: #fff5f5;
       text-align: center;
     }
-    h1, h2, p { margin: .5rem 0; }
+    h1, h2, p { margin: 0.5rem 0; }
     .button {
-      padding: .75rem 1.5rem;
+      padding: 0.75rem 1.5rem;
       font-size: 1rem;
       background: #e85d04;
       color: #fff;
       border: none;
-      border-radius: .5rem;
+      border-radius: 0.5rem;
       cursor: pointer;
     }
     .piggy-container {
@@ -27,15 +27,13 @@
       width: 200px;
       height: 200px;
       margin: 1rem auto;
-    }
-    .piggy {
-      width: 100%;
-      height: 100%;
+      font-size: 200px;
+      line-height: 200px;
+      user-select: none;
       cursor: pointer;
-      transition: transform .2s;
     }
     .shake {
-      animation: shake .2s;
+      animation: shake 0.2s;
     }
     @keyframes shake {
       0%   { transform: translate(0,0); }
@@ -48,14 +46,100 @@
       position: absolute;
       width: 2px;
       height: 120px;
-      background: rgba(0,0,0,.3);
+      background: rgba(0,0,0,0.3);
       top: 40px;
       left: 50%;
       transform-origin: top center;
       pointer-events: none;
     }
     img.qr {
-      width: 220px;
-      height: 220px;
+      width: 220px; height: 220px;
       border: 2px solid #ccc;
       border-radius: 1rem;
+      margin-top: 1rem;
+    }
+    .messages {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 2px dashed #ccc;
+      text-align: left;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app"></div>
+
+  <script>
+    (function(){
+      const maxClicks = 10;
+      let stage = 0;
+      let shaking = false;
+      const app = document.getElementById('app');
+
+      function render() {
+        app.innerHTML = '';
+
+        // 1. Старт
+        if (stage === 0) {
+          app.innerHTML = `
+            <h1>Ярослав, поздравляем со свадьбой!</h1>
+            <p>Пусть жизнь в роли мужа будет сказкой!</p>
+            <button class="button" id="startBtn">К подарочку 🎁</button>
+          `;
+          document.getElementById('startBtn').onclick = () => { stage = 1; render(); };
+          return;
+        }
+
+        // 2. Клики по свинке
+        if (stage < maxClicks) {
+          const container = document.createElement('div');
+          container.className = 'piggy-container' + (shaking ? ' shake' : '');
+          container.textContent = '🐷';
+          container.onclick = () => {
+            shaking = true;
+            setTimeout(() => { shaking = false; render(); }, 200);
+            stage++;
+            render();
+          };
+
+          app.append(
+            Object.assign(document.createElement('p'), { textContent: 'Нажимай на свинку, чтобы она отдала тебе подарок' }),
+            container
+          );
+
+          // трещины
+          for (let i = 0; i < stage; i++) {
+            const line = document.createElement('div');
+            line.className = 'crack-line';
+            const angle = Math.random() * 60 - 30;
+            const offset = Math.random() * 40 - 20;
+            line.style.transform = `translateX(${offset}px) rotate(${angle}deg)`;
+            line.style.opacity = (0.2 + i * (0.6 / maxClicks)).toFixed(2);
+            container.append(line);
+          }
+          return;
+        }
+
+        // 3. Финал
+        app.innerHTML = `
+          <h2>🎉 Ура! Подарок готов!</h2>
+          <p>Отсканируй QR-код, чтобы забрать подарок</p>
+          <img class="qr" src="https://sbpqr.nspk.ru/QRGenerator/images/qr_example.png" alt="QR-код">
+          <div class="messages">
+            <h3>Поздравления от команды 💌</h3>
+            <p>• Ты лучший! Удачи в семейной жизни — Катя 🙌</p>
+            <p>• С любовью и теплом! — Ирина 💐</p>
+            <p>• Пусть в доме всегда будет мир — Саша ☀️</p>
+          </div>
+        `;
+      }
+
+      render();
+    })();
+  </script>
+
+</body>
+</html>
