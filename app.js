@@ -14,27 +14,32 @@
       }
     };
 
-    // создаём массив img.crack в зависимости от stage
+    // создаём линии-трещины
     const cracks = [];
-    for (let i = 1; i < stage; i++) {
+    for (let i = 0; i < stage; i++) {
+      const angle   = (Math.random() * 60) - 30;
+      const offsetX = (Math.random() * 40) - 20;
       cracks.push(
-        React.createElement("img", {
+        React.createElement("div", {
           key: i,
-          src: "https://i.imgur.com/s5XU6vw.png",  // единая картинка трещины
-          className: "crack",
-          style: { opacity: 0.1 + i * 0.08 }
+          className: "crack-line",
+          style: {
+            transform: `translateX(${offsetX}px) rotate(${angle}deg)`,
+            opacity: 0.2 + i * (0.6 / maxClicks)
+          }
         })
       );
     }
 
-    // финальное состояние: свинка разбита
+    // финальный экран
     if (stage >= maxClicks) {
       return React.createElement("div", null,
         React.createElement("h2", null, "🎉 Ура! Подарок готов!"),
         React.createElement("p", null, "Отсканируй QR-код, чтобы забрать подарок"),
         React.createElement("img", {
           src: "https://sbpqr.nspk.ru/QRGenerator/images/qr_example.png",
-          className: "qr"
+          className: "qr",
+          alt: "QR-код"
         }),
         React.createElement("div", { className: "messages" },
           React.createElement("h3", null, "Поздравления от команды 💌"),
@@ -45,7 +50,7 @@
       );
     }
 
-    // начальное состояние (stage 0)
+    // стартовый экран
     if (stage === 0) {
       return React.createElement("div", null,
         React.createElement("h1", null, "Ярослав, поздравляем со свадьбой!"),
@@ -57,15 +62,18 @@
       );
     }
 
-    // промежуточное состояние (1..9)
+    // промежуточные стадии (1–9)
     return React.createElement("div", null,
       React.createElement("p", null, "Нажимай на свинку, чтобы она отдала тебе подарок"),
       React.createElement("div", { className: "piggy-container" },
+        // надёжный URL свинки
         React.createElement("img", {
-          src: "https://cdn-icons-png.flaticon.com/512/2323/2323661.png",
-          className: "piggy " + (shaking ? "shake" : ""),
-          onClick: handleClick
+          src: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Piggy_Bank_Vector.svg/512px-Piggy_Bank_Vector.svg.png",
+          className: "piggy" + (shaking ? " shake" : ""),
+          onClick: handleClick,
+          alt: "копилка-свинка"
         }),
+        // наложенные линии-трещины
         ...cracks
       )
     );
