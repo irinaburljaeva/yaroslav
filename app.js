@@ -14,10 +14,10 @@
       }
     };
 
-    // Рисуем линии-трещины через CSS, без внешних картинок
+    // Генерация CSS-линий-трещин
     const cracks = [];
     for (let i = 0; i < stage; i++) {
-      const angle = Math.random() * 60 - 30;    // угол от –30° до +30°
+      const angle = Math.random() * 60 - 30;    // угол –30°…+30°
       const offsetX = Math.random() * 40 - 20;  // сдвиг по X
       cracks.push(
         React.createElement("div", {
@@ -31,11 +31,16 @@
       );
     }
 
-    // Финальное состояние: QR + поздравления
+    // Финальный экран
     if (stage >= maxClicks) {
       return React.createElement("div", null,
         React.createElement("h2", null, "🎉 Ура! Подарок готов!"),
         React.createElement("p", null, "Отсканируй QR-код, чтобы забрать подарок"),
+        React.createElement("img", {
+          src: "piggy.png",
+          className: "piggy shake",
+          alt: "разбитая копилка"
+        }),
         React.createElement("img", {
           src: "https://sbpqr.nspk.ru/QRGenerator/images/qr_example.png",
           className: "qr",
@@ -50,7 +55,7 @@
       );
     }
 
-    // Стартовое сообщение
+    // Начальный экран
     if (stage === 0) {
       return React.createElement("div", null,
         React.createElement("h1", null, "Ярослав, поздравляем со свадьбой!"),
@@ -62,12 +67,12 @@
       );
     }
 
-    // Промежуточные клики: показываем свинку + трещины
+    // Промежуточные стадии (1–9)
     return React.createElement("div", null,
       React.createElement("p", null, "Нажимай на свинку, чтобы она отдала тебе подарок"),
       React.createElement("div", { className: "piggy-container" },
         React.createElement("img", {
-          src: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Piggy_Bank_Vector.svg/512px-Piggy_Bank_Vector.svg.png",
+          src: "piggy.png",
           className: "piggy" + (shaking ? " shake" : ""),
           onClick: handleClick,
           alt: "копилка-свинка"
