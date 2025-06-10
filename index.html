@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Копилка</title>
+  <script defer src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script defer src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script defer src="https://unpkg.com/framer-motion/dist/framer-motion.umd.js"></script>
+  <script defer src="app.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #fff5f5;
+      padding: 2rem;
+      text-align: center;
+    }
+    .button {
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      background: #e85d04;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .piggy-container {
+      position: relative;
+      display: inline-block;
+    }
+    .piggy {
+      width: 200px;
+      height: 200px;
+      transition: transform 0.2s;
+    }
+    .crack {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 200px;
+      pointer-events: none;
+    }
+    .shake {
+      animation: shake 0.2s;
+    }
+    @keyframes shake {
+      0% { transform: translate(0px, 0px); }
+      25% { transform: translate(3px, -2px); }
+      50% { transform: translate(-3px, 2px); }
+      75% { transform: translate(2px, -3px); }
+      100% { transform: translate(0px, 0px); }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>
