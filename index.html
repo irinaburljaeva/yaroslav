@@ -107,18 +107,20 @@
 </head>
 <body>
 
-  <div id="titleBlock">
+  <div id="startBlock">
     <h1>Ярослав, поздравляем со свадьбой!</h1>
     <p>Пусть жизнь в роли мужа будет сказкой!<br>Твои коллеги из ШАГАЙ ДОМА ⚡️</p>
+    <button class="button" onclick="startGift()">К подарочку 🎁</button>
   </div>
 
-  <p id="tapText" class="tap-text">Нажимай на свинку, чтобы она отдала тебе подарок 🐷</p>
-
-  <div id="videoContainer">
-    <video id="piggyVideo" preload="auto" playsinline>
-      <source src="your-video.mp4" type="video/mp4" />
-      Твой браузер не поддерживает видео :(
-    </video>
+  <div id="interactionBlock" class="hidden">
+    <p id="tapText" class="tap-text">Нажимай на свинку, чтобы она отдала тебе подарок 🐷</p>
+    <div id="videoContainer">
+      <video id="piggyVideo" preload="auto" playsinline>
+        <source src="your-video.mp4" type="video/mp4" />
+        Твой браузер не поддерживает видео :(
+      </video>
+    </div>
   </div>
 
   <div id="finalText" class="hidden final-text">
@@ -132,14 +134,20 @@
   </div>
 
   <script>
+    const startBlock = document.getElementById("startBlock");
+    const interactionBlock = document.getElementById("interactionBlock");
     const video = document.getElementById("piggyVideo");
+    const tapText = document.getElementById("tapText");
     const videoContainer = document.getElementById("videoContainer");
     const finalText = document.getElementById("finalText");
-    const titleBlock = document.getElementById("titleBlock");
-    const tapText = document.getElementById("tapText");
 
     let clickCount = 0;
     const maxClicks = 10;
+
+    function startGift() {
+      startBlock.classList.add("hidden");
+      interactionBlock.classList.remove("hidden");
+    }
 
     video.addEventListener("click", () => {
       clickCount++;
@@ -161,9 +169,7 @@
     });
 
     video.onended = () => {
-      titleBlock.classList.add("hidden");
-      videoContainer.classList.add("hidden");
-      tapText.classList.add("hidden");
+      interactionBlock.classList.add("hidden");
       finalText.classList.remove("hidden");
     };
   </script>
