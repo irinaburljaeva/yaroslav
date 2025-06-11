@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Копилка-сюрприз 🎁</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Красивый шрифт Inter -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -16,11 +15,22 @@
       color: #333;
     }
     video {
-      width: 300px;
-      max-width: 90vw;
+      width: 100%;
+      max-width: 400px;
       border-radius: 1rem;
       cursor: pointer;
       margin-top: 1rem;
+      outline: none;
+    }
+    .shake {
+      animation: shake 0.3s;
+    }
+    @keyframes shake {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(4px, -4px); }
+      50% { transform: translate(-4px, 4px); }
+      75% { transform: translate(4px, 4px); }
+      100% { transform: translate(0, 0); }
     }
     .button {
       padding: 0.75rem 1.5rem;
@@ -40,7 +50,15 @@
       background: #f2f2f2;
       padding: 1rem;
       border-radius: 1rem;
-      max-width: 400px;
+      max-width: 600px;
+      margin-inline: auto;
+    }
+    .messages {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 2px dashed #ccc;
+      text-align: left;
+      max-width: 600px;
       margin-inline: auto;
     }
   </style>
@@ -59,6 +77,12 @@
 
   <div id="finalText" class="hidden final-text">
     🎉 На твою карту ушел перевод, проверяй 😉
+    <div class="messages">
+      <h3>Поздравления от команды 💌</h3>
+      <p>• Ты лучший! Удачи в семейной жизни — Катя 🙌</p>
+      <p>• С любовью и теплом! — Ирина 💐</p>
+      <p>• Пусть в доме всегда будет мир — Саша ☀️</p>
+    </div>
   </div>
 
   <script>
@@ -82,20 +106,20 @@
       clickCount++;
 
       if (clickCount < maxClicks) {
-        // Разбиваем 5 секунд на 9 шагов
         const step = 5 / (maxClicks - 1);
         video.currentTime = step * (clickCount - 1);
         video.play();
-
-        // Автостоп после 0.4 сек (можно регулировать)
-        setTimeout(() => video.pause(), 400);
+        video.classList.add('shake');
+        setTimeout(() => {
+          video.pause();
+          video.classList.remove('shake');
+        }, 400);
       }
 
       if (clickCount === maxClicks) {
         video.currentTime = 5;
         video.play();
-        video.onclick = null; // больше не реагирует
-
+        video.onclick = null;
         video.onended = () => {
           videoContainer.classList.add('hidden');
           finalText.classList.remove('hidden');
