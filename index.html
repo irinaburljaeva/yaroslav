@@ -1,144 +1,109 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Копилка-сюрприз 🎁</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Копилка 🎁</title>
   <style>
     body {
-      margin: 0;
-      padding: 2rem;
       font-family: sans-serif;
       background: #fff5f5;
+      padding: 2rem;
       text-align: center;
     }
-    h1, h2, p { margin: 0.5rem 0; }
+    video {
+      width: 300px;
+      margin: 1rem 0;
+      border-radius: 1rem;
+      cursor: pointer;
+    }
+    .shake {
+      animation: shake 0.4s;
+    }
+    @keyframes shake {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(2deg); }
+      50% { transform: rotate(-2deg); }
+      75% { transform: rotate(2deg); }
+      100% { transform: rotate(0deg); }
+    }
+    .hidden {
+      display: none;
+    }
     .button {
       padding: 0.75rem 1.5rem;
       font-size: 1rem;
       background: #e85d04;
-      color: #fff;
+      color: white;
       border: none;
       border-radius: 0.5rem;
       cursor: pointer;
-    }
-    .piggy-container {
-      position: relative;
-      width: 200px;
-      height: 200px;
-      margin: 1rem auto;
-      font-size: 200px;
-      line-height: 200px;
-      user-select: none;
-      cursor: pointer;
-    }
-    .shake {
-      animation: shake 0.2s;
-    }
-    @keyframes shake {
-      0%   { transform: translate(0,0); }
-      25%  { transform: translate(3px,-2px); }
-      50%  { transform: translate(-3px,2px); }
-      75%  { transform: translate(2px,-3px); }
-      100% { transform: translate(0,0); }
-    }
-    .crack-line {
-      position: absolute;
-      width: 2px;
-      height: 120px;
-      background: rgba(0,0,0,0.3);
-      top: 40px;
-      left: 50%;
-      transform-origin: top center;
-      pointer-events: none;
-    }
-    img.qr {
-      width: 220px; height: 220px;
-      border: 2px solid #ccc;
-      border-radius: 1rem;
-      margin-top: 1rem;
-    }
-    .messages {
-      margin-top: 2rem;
-      padding-top: 1rem;
-      border-top: 2px dashed #ccc;
-      text-align: left;
-      max-width: 600px;
-      margin: 0 auto;
     }
   </style>
 </head>
 <body>
 
-  <div id="app"></div>
+  <h1>Ярослав, поздравляем со свадьбой!</h1>
+  <p>Пусть жизнь в роли мужа будет сказкой!<br>Твои коллеги из ШАГАЙ ДОМА ⚡️</p>
+
+  <button id="startBtn" class="button">К подарочку 🎁</button>
+
+  <div id="videoContainer" class="hidden">
+    <p>Нажимай на копилку, чтобы получить подарок</p>
+    <video id="piggyVid" src="piggy.mp4" preload="auto"></video>
+  </div>
+
+  <div id="finalMessage" class="hidden">
+    <h2>🎉 Ура! Подарок готов!</h2>
+    <p>На твою карту ушел перевод, проверяй 😉</p>
+    <div style="margin-top: 2rem; text-align: left; max-width: 600px; margin-inline: auto;">
+      <h3>Поздравления от команды 💌</h3>
+      <p>• Ты лучший! Удачи в семейной жизни — Катя 🙌</p>
+      <p>• С любовью и теплом! — Ирина 💐</p>
+      <p>• Пусть в доме всегда будет мир — Саша ☀️</p>
+    </div>
+  </div>
 
   <script>
-    (function(){
-      const maxClicks = 10;
-      let stage = 0;
-      let shaking = false;
-      const app = document.getElementById('app');
+    const startBtn = document.getElementById('startBtn');
+    const video = document.getElementById('piggyVid');
+    const videoContainer = document.getElementById('videoContainer');
+    const finalMessage = document.getElementById('finalMessage');
 
-      function render() {
-        app.innerHTML = '';
+    let clickCount = 0;
+    const maxClicks = 10;
 
-        // 1. Старт
-        if (stage === 0) {
-          app.innerHTML = `
-            <h1>Ярослав, поздравляем со свадьбой!</h1>
-            <p>Пусть жизнь в роли мужа будет сказкой!</p>
-            <button class="button" id="startBtn">К подарочку 🎁</button>
-          `;
-          document.getElementById('startBtn').onclick = () => { stage = 1; render(); };
-          return;
-        }
+    startBtn.onclick = () => {
+      startBtn.classList.add('hidden');
+      videoContainer.classList.remove('hidden');
+      video.currentTime = 0;
+    };
 
-        // 2. Клики по свинке
-        if (stage < maxClicks) {
-          const container = document.createElement('div');
-          container.className = 'piggy-container' + (shaking ? ' shake' : '');
-          container.textContent = '🐷';
-          container.onclick = () => {
-            shaking = true;
-            setTimeout(() => { shaking = false; render(); }, 200);
-            stage++;
-            render();
-          };
+    video.onclick = () => {
+      clickCount++;
 
-          app.append(
-            Object.assign(document.createElement('p'), { textContent: 'Нажимай на свинку, чтобы она отдала тебе подарок' }),
-            container
-          );
+      // тряска
+      video.classList.add('shake');
+      setTimeout(() => video.classList.remove('shake'), 400);
 
-          // трещины
-          for (let i = 0; i < stage; i++) {
-            const line = document.createElement('div');
-            line.className = 'crack-line';
-            const angle = Math.random() * 60 - 30;
-            const offset = Math.random() * 40 - 20;
-            line.style.transform = `translateX(${offset}px) rotate(${angle}deg)`;
-            line.style.opacity = (0.2 + i * (0.6 / maxClicks)).toFixed(2);
-            container.append(line);
-          }
-          return;
-        }
-
-        // 3. Финал
-        app.innerHTML = `
-          <h2>🎉 Ура! Подарок готов!</h2>
-          <p>Отсканируй QR-код, чтобы забрать подарок</p>
-          <img class="qr" src="https://sbpqr.nspk.ru/QRGenerator/images/qr_example.png" alt="QR-код">
-          <div class="messages">
-            <h3>Поздравления от команды 💌</h3>
-            <p>• Ты лучший! Удачи в семейной жизни — Катя 🙌</p>
-            <p>• С любовью и теплом! — Ирина 💐</p>
-            <p>• Пусть в доме всегда будет мир — Саша ☀️</p>
-          </div>
-        `;
+      if (clickCount < maxClicks) {
+        // Прогрессивное воспроизведение до 5 сек
+        const targetTime = Math.min(5, video.currentTime + 0.55);
+        video.play();
+        setTimeout(() => {
+          video.pause();
+          video.currentTime = targetTime;
+        }, 550);
+      } else if (clickCount === maxClicks) {
+        // Финал: воспроизведение с 5 до конца
+        video.currentTime = 5;
+        video.play();
+        video.onended = () => {
+          videoContainer.classList.add('hidden');
+          finalMessage.classList.remove('hidden');
+        };
       }
-
-      render();
-    })();
+    };
   </script>
 
 </body>
