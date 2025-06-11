@@ -1,19 +1,45 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Копилка-сюрприз 🎁</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
     body {
       margin: 0;
-      padding: 2rem;
-      font-family: 'Inter', sans-serif;
-      background: white;
+      padding: 2rem 1rem;
+      font-family: 'Montserrat', sans-serif;
+      background: #ffffff;
       text-align: center;
-      color: #333;
     }
+    h1, h2, p {
+      margin: 0.5rem 0;
+    }
+
+    .button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      background: #e85d04;
+      color: #fff;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+
+    .shake {
+      animation: shake 0.2s;
+    }
+
+    @keyframes shake {
+      0%   { transform: translate(0,0); }
+      25%  { transform: translate(3px,-2px); }
+      50%  { transform: translate(-3px,2px); }
+      75%  { transform: translate(2px,-3px); }
+      100% { transform: translate(0,0); }
+    }
+
     video {
       width: 200%;
       max-width: 800px;
@@ -25,65 +51,69 @@
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
     }
+
     video:focus {
       outline: none;
       box-shadow: none;
     }
-    .shake {
-      animation: shake 0.3s;
-    }
-    @keyframes shake {
-      0% { transform: translate(0, 0); }
-      25% { transform: translate(4px, -4px); }
-      50% { transform: translate(-4px, 4px); }
-      75% { transform: translate(4px, 4px); }
-      100% { transform: translate(0, 0); }
-    }
-    .button {
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      background: #e85d04;
-      color: white;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
-    }
+
     .hidden {
       display: none;
     }
+
     .final-text {
       font-size: 1.2rem;
       margin-top: 2rem;
-      background: #f2f2f2;
+      background: #f9f9f9;
       padding: 1rem;
       border-radius: 1rem;
       max-width: 600px;
       margin-inline: auto;
     }
+
+    .final-line {
+      font-weight: 600;
+      font-size: 1.3rem;
+      background: #e6f9ec;
+      border: 1px solid #b5dfc3;
+      padding: 1rem;
+      border-radius: 1rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
     .messages {
-      margin-top: 2rem;
+      margin-top: 1rem;
       padding-top: 1rem;
       border-top: 2px dashed #ccc;
       text-align: left;
       max-width: 600px;
       margin-inline: auto;
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
 
-  <h1>Ярослав, поздравляем со свадьбой!</h1>
-  <p>Пусть жизнь в роли мужа будет сказкой!<br>Твои коллеги из ШАГАЙ ДОМА ⚡️</p>
+  <div id="titleBlock">
+    <h1>Ярослав, поздравляем со свадьбой!</h1>
+    <p>Пусть жизнь в роли мужа будет сказкой!<br>Твои коллеги из ШАГАЙ ДОМА ⚡️</p>
+  </div>
 
-  <button id="startBtn" class="button">К подарочку 🎁</button>
-
-  <div id="videoContainer" class="hidden">
-    <p>Нажимай на свинку, чтобы она раскрыла свой секрет</p>
-    <video id="piggyVid" src="piggy.mp4" preload="auto" playsinline muted></video>
+  <div id="videoContainer">
+    <video id="piggyVideo" preload="auto" playsinline>
+      <source src="your-video.mp4" type="video/mp4" />
+      Твой браузер не поддерживает видео :(
+    </video>
   </div>
 
   <div id="finalText" class="hidden final-text">
-    🎉 На твою карту ушел перевод, проверяй 😉
+    <div class="final-line">🎉 На твою карту ушел перевод, проверяй 😉</div>
     <div class="messages">
       <h3>Поздравления от команды 💌</h3>
       <p>• Ты лучший! Удачи в семейной жизни — Катя 🙌</p>
@@ -93,45 +123,36 @@
   </div>
 
   <script>
-    const startBtn = document.getElementById('startBtn');
-    const video = document.getElementById('piggyVid');
-    const videoContainer = document.getElementById('videoContainer');
-    const finalText = document.getElementById('finalText');
+    const video = document.getElementById("piggyVideo");
+    const videoContainer = document.getElementById("videoContainer");
+    const finalText = document.getElementById("finalText");
+    const titleBlock = document.getElementById("titleBlock");
 
     let clickCount = 0;
     const maxClicks = 10;
 
-    startBtn.onclick = () => {
-      startBtn.classList.add('hidden');
-      videoContainer.classList.remove('hidden');
-      video.currentTime = 0;
-      video.muted = false;
-      video.pause();
-    };
-
-    video.onclick = () => {
+    video.addEventListener("click", () => {
       clickCount++;
+      video.classList.add("shake");
 
-      if (clickCount < maxClicks) {
-        const step = 5 / (maxClicks - 1);
-        video.currentTime = step * (clickCount - 1);
+      if (clickCount <= maxClicks) {
+        const desiredTime = (5 * clickCount) / maxClicks;
+        video.currentTime = desiredTime;
         video.play();
-        video.classList.add('shake');
-        setTimeout(() => {
-          video.pause();
-          video.classList.remove('shake');
-        }, 400);
       }
 
       if (clickCount === maxClicks) {
-        video.currentTime = 5;
+        video.removeAttribute("controls");
         video.play();
-        video.onclick = null;
-        video.onended = () => {
-          videoContainer.classList.add('hidden');
-          finalText.classList.remove('hidden');
-        };
       }
+
+      setTimeout(() => video.classList.remove("shake"), 200);
+    });
+
+    video.onended = () => {
+      titleBlock.classList.add("hidden");
+      videoContainer.classList.add("hidden");
+      finalText.classList.remove("hidden");
     };
   </script>
 
