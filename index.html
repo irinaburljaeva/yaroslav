@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Копилка-сюрприз 🎁</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
-
     body {
       margin: 0;
-      padding: 2rem 1rem;
-      font-family: 'Montserrat', sans-serif;
+      padding: 2rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #ffffff;
       text-align: center;
     }
@@ -29,8 +27,20 @@
       cursor: pointer;
     }
 
+    .hidden {
+      display: none;
+    }
+
+    video {
+      width: 200%;
+      max-width: 600px;
+      margin-top: 1rem;
+      border-radius: 1rem;
+      pointer-events: none;
+    }
+
     .shake {
-      animation: shake 0.2s;
+      animation: shake 0.3s;
     }
 
     @keyframes shake {
@@ -41,37 +51,10 @@
       100% { transform: translate(0,0); }
     }
 
-    video {
-      width: 200%;
-      max-width: 800px;
-      border-radius: 1rem;
-      cursor: pointer;
-      margin-top: 1rem;
-      outline: none;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-    }
-
-    video:focus {
-      outline: none;
-      box-shadow: none;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .tap-text {
-      font-size: 1.1rem;
-      margin-top: 1rem;
-      color: #555;
-    }
-
     .final-text {
       font-size: 1.2rem;
       margin-top: 2rem;
-      background: #f9f9f9;
+      background: #fff0d1;
       padding: 1rem;
       border-radius: 1rem;
       max-width: 600px;
@@ -80,47 +63,38 @@
 
     .final-line {
       font-weight: 600;
-      font-size: 1.3rem;
-      background: #e6f9ec;
-      border: 1px solid #b5dfc3;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      background: #ffefc0;
       padding: 1rem;
       border-radius: 1rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      animation: fadeIn 0.6s ease-in-out;
+      border: 2px solid #e0b000;
     }
 
     .messages {
-      margin-top: 1rem;
+      margin-top: 1.5rem;
       padding-top: 1rem;
       border-top: 2px dashed #ccc;
       text-align: left;
       max-width: 600px;
       margin-inline: auto;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
   </style>
 </head>
 <body>
 
-  <div id="startBlock">
+  <div id="titleBlock">
     <h1>Ярослав, поздравляем со свадьбой!</h1>
     <p>Пусть жизнь в роли мужа будет сказкой!<br>Твои коллеги из ШАГАЙ ДОМА ⚡️</p>
-    <button class="button" onclick="startGift()">К подарочку 🎁</button>
+    <button class="button" id="startBtn">К подарочку 🎁</button>
   </div>
 
-  <div id="interactionBlock" class="hidden">
-    <p id="tapText" class="tap-text">Нажимай на свинку, чтобы она отдала тебе подарок 🐷</p>
-    <div id="videoContainer">
-      <video id="piggyVideo" preload="auto" playsinline>
-        <source src="your-video.mp4" type="video/mp4" />
-        Твой браузер не поддерживает видео :(
-      </video>
-    </div>
+  <div id="interaction" class="hidden">
+    <p id="instruction">Нажимай на свинку, чтобы она отдала тебе подарок</p>
+    <video id="piggyVideo" autoplay muted playsinline>
+      <source src="piggy.mp4" type="video/mp4" />
+      Твой браузер не поддерживает видео.
+    </video>
   </div>
 
   <div id="finalText" class="hidden final-text">
@@ -134,42 +108,41 @@
   </div>
 
   <script>
-    const startBlock = document.getElementById("startBlock");
-    const interactionBlock = document.getElementById("interactionBlock");
+    const startBtn = document.getElementById("startBtn");
+    const titleBlock = document.getElementById("titleBlock");
+    const interaction = document.getElementById("interaction");
     const video = document.getElementById("piggyVideo");
-    const tapText = document.getElementById("tapText");
-    const videoContainer = document.getElementById("videoContainer");
     const finalText = document.getElementById("finalText");
 
     let clickCount = 0;
     const maxClicks = 10;
 
-    function startGift() {
-      startBlock.classList.add("hidden");
-      interactionBlock.classList.remove("hidden");
-    }
+    startBtn.addEventListener("click", () => {
+      titleBlock.classList.add("hidden");
+      interaction.classList.remove("hidden");
+      video.currentTime = 0;
+      video.pause();
+    });
 
-    video.addEventListener("click", () => {
-      clickCount++;
-      video.classList.add("shake");
+    interaction.addEventListener("click", () => {
+      if (clickCount < maxClicks) {
+        video.classList.add("shake");
+        setTimeout(() => video.classList.remove("shake"), 300);
 
-      if (clickCount <= maxClicks) {
-        const desiredTime = (5 * clickCount) / maxClicks;
-        video.currentTime = desiredTime;
-        video.play();
+        clickCount++;
+        if (clickCount < maxClicks) {
+          video.currentTime = clickCount * 0.5;
+          video.pause();
+        } else {
+          video.currentTime = 5; // финал
+          video.muted = false;
+          video.play();
+        }
       }
-
-      if (clickCount === maxClicks) {
-        video.removeAttribute("controls");
-        video.play();
-        tapText.classList.add("hidden");
-      }
-
-      setTimeout(() => video.classList.remove("shake"), 200);
     });
 
     video.onended = () => {
-      interactionBlock.classList.add("hidden");
+      interaction.classList.add("hidden");
       finalText.classList.remove("hidden");
     };
   </script>
