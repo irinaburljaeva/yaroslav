@@ -14,6 +14,7 @@
       background: #ffffff;
       text-align: center;
     }
+
     h1, h2, p {
       margin: 0.5rem 0;
     }
@@ -61,6 +62,12 @@
       display: none;
     }
 
+    .tap-text {
+      font-size: 1.1rem;
+      margin-top: 1rem;
+      color: #555;
+    }
+
     .final-text {
       font-size: 1.2rem;
       margin-top: 2rem;
@@ -105,6 +112,8 @@
     <p>Пусть жизнь в роли мужа будет сказкой!<br>Твои коллеги из ШАГАЙ ДОМА ⚡️</p>
   </div>
 
+  <p id="tapText" class="tap-text">Нажимай на свинку, чтобы она отдала тебе подарок 🐷</p>
+
   <div id="videoContainer">
     <video id="piggyVideo" preload="auto" playsinline>
       <source src="your-video.mp4" type="video/mp4" />
@@ -127,6 +136,7 @@
     const videoContainer = document.getElementById("videoContainer");
     const finalText = document.getElementById("finalText");
     const titleBlock = document.getElementById("titleBlock");
+    const tapText = document.getElementById("tapText");
 
     let clickCount = 0;
     const maxClicks = 10;
@@ -144,6 +154,7 @@
       if (clickCount === maxClicks) {
         video.removeAttribute("controls");
         video.play();
+        tapText.classList.add("hidden");
       }
 
       setTimeout(() => video.classList.remove("shake"), 200);
@@ -152,6 +163,7 @@
     video.onended = () => {
       titleBlock.classList.add("hidden");
       videoContainer.classList.add("hidden");
+      tapText.classList.add("hidden");
       finalText.classList.remove("hidden");
     };
   </script>
