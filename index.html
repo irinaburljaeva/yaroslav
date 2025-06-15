@@ -5,16 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Копилка-сюрприз 🎁</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
     body {
       margin: 0;
-      padding: 2rem;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #ffffff;
+      padding: 2rem 1rem;
+      font-family: 'Montserrat', sans-serif;
+      background: #f5f5f5;
+      color: #333;
       text-align: center;
     }
 
-    h1, h2, p {
-      margin: 0.5rem 0;
+    /* Карточка-превью */
+    #titleBlock {
+      background: #ffffff;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      padding: 2rem 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    #titleBlock:hover {
+      transform: translateY(-5px);
+    }
+    #titleBlock h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      color: #e85d04;
+    }
+    #titleBlock p {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      color: #555;
     }
 
     .button {
@@ -25,19 +50,21 @@
       border: none;
       border-radius: 0.5rem;
       cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      transition: background 0.2s;
+    }
+    .button:hover {
+      background: #d35400;
     }
 
-    .hidden {
-      display: none;
-    }
+    .hidden { display: none; }
 
     .video-wrapper {
-      width: 200%;
+      width: 100%;
       max-width: 600px;
       margin: 1rem auto;
       pointer-events: none;
     }
-
     video {
       width: 100%;
       border-radius: 1rem;
@@ -46,7 +73,6 @@
     .shake {
       animation: shake 0.3s;
     }
-
     @keyframes shake {
       0%   { transform: translate(0,0); }
       25%  { transform: translate(3px,-2px); }
@@ -65,7 +91,6 @@
       margin-inline: auto;
       text-align: left;
     }
-
     .final-line {
       font-weight: 600;
       font-size: 1.4rem;
@@ -76,13 +101,11 @@
       border: 2px solid #e0b000;
       text-align: center;
     }
-
     .messages {
       margin-top: 1.5rem;
       padding-top: 1rem;
       border-top: 2px dashed #ccc;
     }
-
     .wish {
       background: #fdf2f2;
       border: 1px solid #e2bfbf;
@@ -176,7 +199,6 @@
           video.currentTime = clickCount * 0.5;
           video.pause();
         } else {
-          // последний клик — воспроизведение разрушения
           video.currentTime = 5;
           video.muted = false;
           video.play();
