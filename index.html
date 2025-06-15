@@ -2,7 +2,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Копилка-сюрприз 🎁</n></title>
+  <title>Копилка-сюрприз 🎁</title>
   <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <style>
@@ -15,10 +15,7 @@
   text-align: center;
   transition: background 0.3s;
 }
-/* Белый фон при показе видео */
-body.white-bg {
-  background: #ffffff;
-}
+body.white-bg { background: #ffffff; }
 
 /* Превью-карточка */
 #titleBlock {
@@ -29,7 +26,6 @@ body.white-bg {
   border-radius: 1rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   position: relative;
-  overflow: hidden;
 }
 #titleBlock h1 {
   font-size: 2rem;
@@ -43,7 +39,6 @@ body.white-bg {
   margin-bottom: 1.5rem;
   color: #555;
 }
-
 .button {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
@@ -55,9 +50,7 @@ body.white-bg {
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   transition: background 0.2s;
 }
-.button:hover {
-  background: #d35400;
-}
+.button:hover { background: #d35400; }
 
 .hidden { display: none; }
 
@@ -76,10 +69,10 @@ video {
   animation: shake 0.3s;
 }
 @keyframes shake {
-  0%   { transform: translate(0,0); }
-  25%  { transform: translate(3px,-2px); }
-  50%  { transform: translate(-3px,2px); }
-  75%  { transform: translate(2px,-3px); }
+  0% { transform: translate(0,0); }
+  25% { transform: translate(3px,-2px); }
+  50% { transform: translate(-3px,2px); }
+  75% { transform: translate(2px,-3px); }
   100% { transform: translate(0,0); }
 }
 
@@ -124,7 +117,8 @@ video {
 
   </style>
 </head>
-<body>  <div id="titleBlock">
+<body>
+  <div id="titleBlock">
     <h1>Ярослав, поздравляем со свадьбой!</h1>
     <p>Пусть жизнь в роли мужа будет сказкой!<br>Твои коллеги из ШАГАЙ ДОМА ⚡️</p>
     <button class="button" id="startBtn">К подарочку 🎁</button>
@@ -138,58 +132,27 @@ video {
     </div>
   </div>  <div id="finalText" class="hidden final-text">
     <div class="final-line">🎉 На твою карту ушел перевод, проверяй 😉</div>
-    $1
+    <div class="messages">
       <div class="wish">
-        <p><strong>Аня:</strong><br>
-        Ярослав, желаю тебе «вот этого самого спокойствия, умиротворения и слияния с бесконечно вечным» - в прекрасном новом этапе семейной жизни! 💍😍<br><br>
-        Поддержки, взаимопонимания, любви и больше классных моментов вместе!</p>
+        <p><strong>Маша:</strong><br>
+        Ярослав, тебя и твою прекрасную невесту поздравляю с этим днем!<br>
+        Пожелаю вашей молодой семье быть главной опорой друг для друга, ценить время рядом, быть мудрыми в решениях и отношениях ♥️</p>
       </div>
-    $2 alt="Свадебные кольца" class="rings" />
-  </div>  <script>
-    // Запускаем конфети на первом экране
-    document.addEventListener('DOMContentLoaded', () => {
-      confetti({ particleCount: 100, spread: 60 });
-    });
-
-    const startBtn = document.getElementById("startBtn");
-    const titleBlock = document.getElementById("titleBlock");
-    const interaction = document.getElementById("interaction");
-    const video = document.getElementById("piggyVideo");
-    const finalText = document.getElementById("finalText");
-    const instruction = document.getElementById("instruction");
-
-    let clickCount = 0;
-    const maxClicks = 10;
-
-    startBtn.addEventListener("click", () => {
-      titleBlock.classList.add("hidden");
-      document.body.classList.add("white-bg");
-      interaction.classList.remove("hidden");
-      video.currentTime = 0;
-      video.pause();
-    });
-
-    interaction.addEventListener("click", () => {
-      if (clickCount < maxClicks) {
-        clickCount++;
-        video.classList.add("shake");
-        setTimeout(() => video.classList.remove("shake"), 300);
-
-        if (clickCount < maxClicks) {
-          video.currentTime = clickCount * 0.5;
-          video.pause();
-        } else {
-          video.currentTime = 5;
-          video.muted = false;
-          video.play();
-          instruction.classList.add("hidden");
-        }
-      }
-    });
-
-    video.onended = () => {
-      interaction.classList.add("hidden");
-      finalText.classList.remove("hidden");
-    };
-  </script></body>
-</html>
+      <div class="wish">
+        <p><strong>Катя:</strong><br>
+        Поднимем бокал за молодых😅❤️</p>
+      </div>
+      <div class="wish">
+        <p><strong>Марина:</strong><br>
+        Будьте счастливы! Пусть ваша любовь живет вечно ♾️ ✨</p>
+      </div>
+      <div class="wish">
+        <p><strong>Александра:</strong><br>
+        Дорогие Ярослав и его прекрасная невеста! 💍💫<br><br>
+        От всей души поздравляю вас с этим трепетным, светлым и важным днём — днём рождения вашей семьи ❤️<br>
+        Это начало большого пути, где всё только начинается: и радость в мелочах, и поддержка в сложные моменты, и та особая близость, которая с каждым годом становится только крепче 🤝<br><br>
+        Пусть ваш дом будет наполнен смехом, пониманием и уютом 🕯️🏡<br>
+        Пусть вы всегда держитесь за руки — не только в праздники, но и в будни, не только в лёгкости, но и в трудностях 🤗<br>&lt;br&gt;
+        Цените, обнимайте, прощайте, удивляйте друг друга — каждый день, без повода 💌<br><br>
+        Пусть любовь будет не просто<br>...
+```
