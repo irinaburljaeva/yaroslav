@@ -1,129 +1,129 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html><html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Копилка-сюрприз 🎁</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');body {
+  margin: 0;
+  padding: 2rem 1rem;
+  font-family: 'Montserrat', sans-serif;
+  background: #f5f5f5;
+  color: #333;
+  text-align: center;
+}
 
-    body {
-      margin: 0;
-      padding: 2rem 1rem;
-      font-family: 'Montserrat', sans-serif;
-      background: #f5f5f5;
-      color: #333;
-      text-align: center;
-    }
+/* Превью-карточка */
+#titleBlock {
+  background: #ffffff;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  padding: 2rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+#titleBlock:hover {
+  transform: translateY(-5px);
+}
+#titleBlock h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #e85d04;
+}
+#titleBlock p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  color: #555;
+}
 
-    /* Карточка-превью */
-    #titleBlock {
-      background: #ffffff;
-      max-width: 600px;
-      margin: 0 auto 2rem;
-      padding: 2rem 1.5rem;
-      border-radius: 1rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-    }
-    #titleBlock:hover {
-      transform: translateY(-5px);
-    }
-    #titleBlock h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      font-weight: 600;
-      color: #e85d04;
-    }
-    #titleBlock p {
-      font-size: 1rem;
-      line-height: 1.5;
-      margin-bottom: 1.5rem;
-      color: #555;
-    }
+.button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background: #e85d04;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: background 0.2s;
+}
+.button:hover {
+  background: #d35400;
+}
 
-    .button {
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      background: #e85d04;
-      color: #fff;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      transition: background 0.2s;
-    }
-    .button:hover {
-      background: #d35400;
-    }
+.hidden { display: none; }
 
-    .hidden { display: none; }
+.video-wrapper {
+  width: 100%;
+  max-width: 600px;
+  margin: 1rem auto;
+  pointer-events: none;
+}
+video {
+  width: 100%;
+  border-radius: 1rem;
+}
 
-    .video-wrapper {
-      width: 100%;
-      max-width: 600px;
-      margin: 1rem auto;
-      pointer-events: none;
-    }
-    video {
-      width: 100%;
-      border-radius: 1rem;
-    }
+.shake {
+  animation: shake 0.3s;
+}
+@keyframes shake {
+  0%   { transform: translate(0,0); }
+  25%  { transform: translate(3px,-2px); }
+  50%  { transform: translate(-3px,2px); }
+  75%  { transform: translate(2px,-3px); }
+  100% { transform: translate(0,0); }
+}
 
-    .shake {
-      animation: shake 0.3s;
-    }
-    @keyframes shake {
-      0%   { transform: translate(0,0); }
-      25%  { transform: translate(3px,-2px); }
-      50%  { transform: translate(-3px,2px); }
-      75%  { transform: translate(2px,-3px); }
-      100% { transform: translate(0,0); }
-    }
+.final-text {
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  background: #fff0d1;
+  padding: 1rem;
+  border-radius: 1rem;
+  max-width: 600px;
+  margin-inline: auto;
+  text-align: left;
+}
+.final-line {
+  font-weight: 600;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  background: #ffefc0;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 2px solid #e0b000;
+  text-align: center;
+}
+.messages {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 2px dashed #ccc;
+}
+.wish {
+  background: #fdf2f2;
+  border: 1px solid #e2bfbf;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+.rings {
+  display: block;
+  margin: 2rem auto 0;
+  max-width: 200px;
+  width: 100%;
+}
 
-    .final-text {
-      font-size: 1.2rem;
-      margin-top: 2rem;
-      background: #fff0d1;
-      padding: 1rem;
-      border-radius: 1rem;
-      max-width: 600px;
-      margin-inline: auto;
-      text-align: left;
-    }
-    .final-line {
-      font-weight: 600;
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
-      background: #ffefc0;
-      padding: 1rem;
-      border-radius: 1rem;
-      border: 2px solid #e0b000;
-      text-align: center;
-    }
-    .messages {
-      margin-top: 1.5rem;
-      padding-top: 1rem;
-      border-top: 2px dashed #ccc;
-    }
-    .wish {
-      background: #fdf2f2;
-      border: 1px solid #e2bfbf;
-      border-radius: 10px;
-      padding: 1rem;
-      margin: 1rem 0;
-    }
   </style>
 </head>
-<body>
-
-  <div id="titleBlock">
+<body>  <div id="titleBlock">
     <h1>Ярослав, поздравляем со свадьбой!</h1>
     <p>Пусть жизнь в роли мужа будет сказкой!<br>Твои коллеги из ШАГАЙ ДОМА ⚡️</p>
     <button class="button" id="startBtn">К подарочку 🎁</button>
-  </div>
-
-  <div id="interaction" class="hidden">
+  </div>  <div id="interaction" class="hidden">
     <p id="instruction">Нажимай на свинку, чтобы она отдала тебе подарок 🐷</p>
     <div class="video-wrapper">
       <video id="piggyVideo" autoplay muted playsinline>
@@ -131,9 +131,7 @@
         Твой браузер не поддерживает видео.
       </video>
     </div>
-  </div>
-
-  <div id="finalText" class="hidden final-text">
+  </div>  <div id="finalText" class="hidden final-text">
     <div class="final-line">🎉 На твою карту ушел перевод, проверяй 😉</div>
     <div class="messages">
       <div class="wish">
@@ -155,11 +153,12 @@
         От всей души поздравляю вас с этим трепетным, светлым и важным днём — днём рождения вашей семьи ❤️<br>
         Это начало большого пути, где всё только начинается: и радость в мелочах, и поддержка в сложные моменты, и та особая близость, которая с каждым годом становится только крепче 🤝<br><br>
         Пусть ваш дом будет наполнен смехом, пониманием и уютом 🕯️🏡<br>
-        Пусть вы всегда держитесь за руки — не только в праздники, но и в будни, не только в лёгкости, но и в трудностях 🤗<br>
+        Пусть вы всегда держитесь за руки — не только в праздники, но и в будни, не только в лёгкости, но и в трудностях 🤗<br><br>
         Цените, обнимайте, прощайте, удивляйте друг друга — каждый день, без повода 💌<br><br>
         Пусть любовь будет не просто словом, а живым, настоящим действием и чувством 💞<br>
         Счастья вам — глубокого, спокойного, настоящего. И пусть впереди будет много лет, полных тепла, света и маленьких чудес ✨🌸<br><br>
-        С самыми добрыми пожеланиями 😊</p>
+        С самыми добрыми пожеланиями 😊
+        </p>
       </div>
       <div class="wish">
         <p><strong>Ира:</strong><br>
@@ -169,9 +168,8 @@
         Поздравляю вас ♥️</p>
       </div>
     </div>
-  </div>
-
-  <script>
+    <img src="rings.png" alt="Свадебные кольца" class="rings" />
+  </div>  <script>
     const startBtn = document.getElementById("startBtn");
     const titleBlock = document.getElementById("titleBlock");
     const interaction = document.getElementById("interaction");
@@ -211,7 +209,5 @@
       interaction.classList.add("hidden");
       finalText.classList.remove("hidden");
     };
-  </script>
-
-</body>
+  </script></body>
 </html>
